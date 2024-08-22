@@ -1,16 +1,44 @@
 import React from "react"
-import { useSelector } from "react-redux"
+import toast from "react-hot-toast"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { Logout } from "../redux/AuthSlice"
 
 const Home = () => {
   const user = useSelector((state) => state.Auth.user)
-  console.log(user)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const goToAdmin = () => {
+    navigate("/admin")
+  }
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("token")
+      dispatch(Logout())
+      toast.success("Log out Successfully")
+      navigate("/login")
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div>
       <div className="home-container">
         <div className="user-card">
           <h2>Welcome, {user && user.name}</h2>
-          <button className="logout-btn">Logout</button>
-          <button className="admin-btn"> Go To Admin</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+          {user && user.role == "Admin" ? (
+            <button className="admin-btn" onClick={goToAdmin}>
+              {" "}
+              Go To Admin
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
