@@ -2,10 +2,8 @@ const jwt = require("jsonwebtoken")
 const User = require("../model/user")
 
 const authenticate = async (req, res, next) => {
-
   const token = req.headers.authorization?.split(" ")[1]
   if (!token) return res.status(401).json({ message: "Access denied" })
-
   try {
     const user = jwt.verify(token, "secretekey")
     const currUser = await User.findById(user.id)
