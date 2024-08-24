@@ -41,7 +41,6 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   console.log(req.params.id)
   const user = await User.findById(req.params.id)
-  console.log(user)
   if (user) {
     await User.deleteOne(user._id)
     res.json({ message: "User removed" })
