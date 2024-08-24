@@ -7,26 +7,16 @@ dotenv.config()
 
 const app = express()
 app.use(express.json())
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://role-based-auth-phi.vercel.app",
-      "https://role-based-auth1.netlify.app"
-    ],
-    exposedHeaders: ["authorization"],
-    credentials: true,
-  })
-)
+app.use(cors())
 
 mongoose
   .connect(`${process.env.MONGO_URI}`)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err))
 
-  app.get("/", (req, res) => {
-    res.send("Api is running")
-  })
+app.get("/", (req, res) => {
+  res.send("Api is running")
+})
 
 app.use("/api/auth", require("./routes/authRoutes"))
 app.use("/api/users", require("./routes/userRoutes"))
