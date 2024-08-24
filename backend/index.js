@@ -7,7 +7,16 @@ dotenv.config()
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://role-based-auth-phi.vercel.app",
+    ],
+    exposedHeaders: ["authorization"],
+    credentials: true,
+  })
+)
 
 mongoose
   .connect(`${process.env.MONGO_URI}`)
