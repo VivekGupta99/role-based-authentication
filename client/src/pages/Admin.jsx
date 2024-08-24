@@ -19,11 +19,14 @@ const Admin = () => {
     const getUsers = async () => {
       const token = localStorage.getItem("token")
       try {
-        const response = await axios.get("http://localhost:5000/api/users", {
-          headers: {
-            authorization: "Bearer " + token,
-          },
-        })
+        const response = await axios.get(
+          "https://role-based-authentication-mrf5.onrender.com/api/users",
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
         if (response.data) {
           const filteredData = response.data.filter(
             (x) => x.email !== user.email
@@ -46,7 +49,7 @@ const Admin = () => {
       const token = localStorage.getItem("token")
 
       const response = await axios.delete(
-        `http://localhost:5000/api/users/${id}`,
+        `https://role-based-authentication-mrf5.onrender.com/api/users/${id}`,
         {
           headers: {
             authorization: "Bearer " + token,
@@ -69,7 +72,7 @@ const Admin = () => {
     try {
       const token = localStorage.getItem("token")
       const response = await axios.put(
-        `http://localhost:5000/api/users`,
+        `https://role-based-authentication-mrf5.onrender.com/api/users`,
         { id, role },
         {
           headers: {
@@ -94,7 +97,7 @@ const Admin = () => {
     try {
       const token = localStorage.getItem("token")
       const response = await axios.put(
-        `http://localhost:5000/api/users`,
+        `https://role-based-authentication-mrf5.onrender.com/api/users`,
         { id, team },
         {
           headers: {

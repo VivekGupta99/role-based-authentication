@@ -13,7 +13,7 @@ function Manager() {
       const token = localStorage.getItem("token")
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/users/team",
+          "https://role-based-authentication-mrf5.onrender.com/api/users/team",
           {
             headers: {
               authorization: "Bearer " + token,

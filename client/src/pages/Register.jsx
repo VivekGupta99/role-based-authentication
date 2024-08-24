@@ -14,12 +14,12 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://role-based-authentication-mrf5.onrender.com/api/auth/register",
         {
           name,
           email,
           password,
-          role
+          role,
         }
       )
       toast.success(response.data.message)

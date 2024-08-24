@@ -15,7 +15,7 @@ mongoose
   .catch((err) => console.log(err))
 
   app.get("/", (req, res) => {
-    res.send("api is running")
+    res.send("Api is running")
   })
 
 app.use("/api/auth", require("./routes/authRoutes"))
