@@ -32,8 +32,8 @@ function App() {
           </Route>
 
           <Route path="/" element={<PublicLayout />}>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/manager" element={<ManagerLayout />}>
             <Route index element={<Manager />} />
