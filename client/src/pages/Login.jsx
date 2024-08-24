@@ -28,9 +28,12 @@ const Login = () => {
       if (response.data) {
         if (response.data.role === "Admin") {
           navigate("/admin")
+        } else if (response.data.role === "SuperAdmin") {
+          navigate("/SuperAdmin")
         } else if (response.data.role === "Normal User") {
-          console.log("check 2")
           navigate("/")
+        } else if (response.data.role === "Manager") {
+          navigate("/manager")
         }
         dispatch(SetUser(response.data))
         toast.success(response.data.message)

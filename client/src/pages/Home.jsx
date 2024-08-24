@@ -9,8 +9,10 @@ const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const goToAdmin = () => {
-    navigate("/admin")
+  const goTo = () => {
+    if (user.role === "Admin") navigate("/admin")
+    else if (user.role === "SuperAdmin") navigate("/SuperAdmin")
+    else navigate("/manager")
   }
 
   const handleLogout = () => {
@@ -27,14 +29,16 @@ const Home = () => {
     <div>
       <div className="home-container">
         <div className="user-card">
-          <h2>Welcome, {user && user.name}</h2>
+          <h2>Welcome to the Homepage, {user && user.name}</h2>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
-          {user && user.role == "Admin" ? (
-            <button className="admin-btn" onClick={goToAdmin}>
-              {" "}
-              Go To Admin
+          {user &&
+          (user.role == "Admin" ||
+            user.role === "Manager" ||
+            user.role == "SuperAdmin") ? (
+            <button className="admin-btn" onClick={goTo}>
+              Go To {user.role} Page
             </button>
           ) : (
             ""

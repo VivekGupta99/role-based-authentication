@@ -2,13 +2,12 @@ import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom"
 
-function AdminLayout() {
+function SuperAdminLayout() {
   const user = useSelector((state) => state.Auth.user)
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(user)
-    if (!user || user.role !== "Admin") {
+    if (!user || user.role !== "SuperAdmin") {
       navigate("/login")
     }
   }, [user])
@@ -20,4 +19,4 @@ function AdminLayout() {
   )
 }
 
-export default AdminLayout
+export default SuperAdminLayout

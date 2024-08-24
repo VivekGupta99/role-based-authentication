@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from "@fortawesome/free-solid-svg-icons"
 
-const Admin = () => {
+const SuperAdmin = () => {
   const user = useSelector((state) => state.Auth.user)
   const navigate = useNavigate()
   const [users, setUsers] = useState("")
@@ -32,6 +32,7 @@ const Admin = () => {
         }
       } catch (error) {
         console.log(error)
+        toast.error(error.response.data.message)
         if (error.response && error.response.status === 401) {
           toast.error("Session expired, please log in again")
           navigate("/login")
@@ -44,7 +45,6 @@ const Admin = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token")
-
       const response = await axios.delete(
         `http://localhost:5000/api/users/${id}`,
         {
@@ -55,12 +55,10 @@ const Admin = () => {
       )
       toast.success("User deleted successfully")
     } catch (error) {
-      console.log(error)
+      toast.error(error.response.data.message)
       if (error.response && error.response.status === 401) {
         toast.error("Session expired, please log in again")
         navigate("/login")
-      } else {
-        toast.error(error.response.data.message)
       }
     }
   }
@@ -78,14 +76,9 @@ const Admin = () => {
         }
       )
       console.log(response.data)
-      if (response.data.message === "You can not grant SuperAdmin role") {
-        toast.error(response.data.message)
-      } else {
-        toast.success(response.data.message)
-      }
+      toast.success(response.data.message)
       setEditingRole(null)
     } catch (error) {
-      console.log(error)
       toast.error("Failed to update role")
     }
   }
@@ -103,11 +96,9 @@ const Admin = () => {
         }
       )
       console.log(response.data)
-      if (response.data.message == "You can not assign team to SuperAdmin") {
-        toast.error(response.data.message)
-      } else {
-        toast.success("Team updated successfully")
-      }
+
+      toast.success("Team updated successfully")
+
       setEditingTeam(null)
     } catch (error) {
       console.log(error)
@@ -118,13 +109,15 @@ const Admin = () => {
   const goToHome = () => {
     navigate("/")
   }
+
   return (
     <div>
       <div className="admin-container">
-        <h1>Welcome to the Admin Dashboard, {user.name}</h1>
+        <h1>Welcome to the SuperAdmin Dashboard, {user.name}</h1>
         <button id="log-out-btn" onClick={goToHome}>
           Go To Home
         </button>
+
         <h2>Manage Users</h2>
         <table>
           <thead>
@@ -211,4 +204,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default SuperAdmin

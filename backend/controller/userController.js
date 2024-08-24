@@ -6,26 +6,35 @@ const getUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { id, name, email, role } = req.body
+  const { id, role, team } = req.body
   const user = await User.findById(id)
 
-  if (user) {
-    user.name = name || user.name
-    user.email = email || user.email
-    if (req.user.role === "Admin" && role === "SuperAdmin") {
-      return res.json({ message: "You can not grant SuperAdmin role " })
-    }
-    if (
-      req.user.role === "SuperAdmin" ||
-      (req.user.role === "Admin" && role !== "SuperAdmin")
-    ) {
-      user.role = role || user.role
-    }
+  try {
+    if (user) {
+      if (req.user.role === "Admin" && role === "SuperAdmin") {
+        return res.json({ message: "You can not grant SuperAdmin role" })
+      }
+      if (req.user.role == "Admin" && user.role === "SuperAdmin") {
+        return res.json({
+          message: "You can not assign team to SuperAdmin",
+        })
+      }
+      if (
+        req.user.role === "SuperAdmin" ||
+        (req.user.role === "Admin" && role !== "SuperAdmin")
+      ) {
+        user.team = team || user.team
+        user.role = role || user.role
+      }
 
-    const updatedUser = await user.save()
-    res.json(updatedUser)
-  } else {
-    res.status(404).json({ message: "User not found" })
+      const updatedUser = await user.save()
+      res.json({ message: "Role updated successfully" })
+    } else {
+      res.status(404).json({ message: "User not found" })
+    }
+  } catch (error) {
+    res.json({ message: "Internal server error" })
+    console.log(error)
   }
 }
 
@@ -40,5 +49,32 @@ const deleteUser = async (req, res) => {
     res.status(404).json({ message: "User not found" })
   }
 }
+// Manager: Get team members
+const getTeamMembers = async (req, res) => {
+  const team = req.user.team
+  const teamMembers = await User.find({ team })
+  res.json(teamMembers)
+}
 
-module.exports = { getUsers, updateUser, deleteUser }
+// Manager: Update a team member
+const updateTeamMember = async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user && user.team === req.user.team) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+
+    const updatedUser = await user.save()
+    res.json(updatedUser)
+  } else {
+    res.status(404).json({ message: "User not found or not part of your team" })
+  }
+}
+
+module.exports = {
+  getUsers,
+  updateUser,
+  deleteUser,
+  getTeamMembers,
+  updateTeamMember,
+}

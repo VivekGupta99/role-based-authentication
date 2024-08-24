@@ -10,6 +10,10 @@ import Admin from "./pages/Admin"
 import AdminLayout from "./Layouts/AdminLayout"
 import UserLayout from "./Layouts/UserLayout"
 import PublicLayout from "./Layouts/PublicLayout"
+import Manager from "./pages/Manager"
+import ManagerLayout from "./Layouts/ManagerLayout"
+import SuperAdmin from "./pages/SuperAdmin"
+import SuperAdminLayout from "./Layouts/SuperAdminLayout"
 function App() {
   return (
     <>
@@ -23,9 +27,16 @@ function App() {
             <Route index element={<Admin />} />
           </Route>
 
+          <Route path="/SuperAdmin" element={<SuperAdminLayout />}>
+            <Route index element={<SuperAdmin />} />
+          </Route>
+
           <Route path="/" element={<PublicLayout />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+          </Route>
+          <Route path="/manager" element={<ManagerLayout />}>
+            <Route index element={<Manager />} />
           </Route>
         </Routes>
       </BrowserRouter>

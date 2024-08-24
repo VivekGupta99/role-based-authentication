@@ -5,6 +5,11 @@
   border-radius: 8px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
+} 
+h1 {
+  text-align: center;
+  margin-top: 0px;
+  color: #333333;
 }
 
 h2 {
@@ -15,6 +20,13 @@ h2 {
 
 .input-group {
   margin-bottom: 20px;
+}
+
+#log-out-btn {
+  display: inline-block;
+      max-width: max-content;
+      margin-left: 680px;
+
 }
 
 label {
@@ -33,6 +45,12 @@ input[type="password"] {
   font-size: 16px;
 }
 
+select {
+  margin-bottom: 18px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+}
 button {
   width: 100%;
   padding: 12px;

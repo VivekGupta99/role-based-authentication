@@ -8,8 +8,13 @@ const PublicLayout = () => {
 
   useEffect(() => {
     if (user) {
-      if (user.role === "Admin") {
+      if (user.role === "SuperAdmin") {
+        navigate("/SuperAdmin")
+      } 
+      else if (user.role === "Admin") {
         navigate("/admin")
+      } else if (user.role === "Manager") {
+        navigate("/manager")
       } else if (user.role === "Normal User") {
         navigate("/")
       }

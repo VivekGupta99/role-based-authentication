@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema(
       enum: ["SuperAdmin", "Admin", "Manager", "Normal User"],
       default: "Normal User",
     },
-    team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" }, 
+    team: { type: String, default: "default" }, 
   },
   {
     timestamps: true,
