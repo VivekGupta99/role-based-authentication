@@ -12,6 +12,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://role-based-auth-phi.vercel.app",
+      "https://role-based-auth1.netlify.app"
     ],
     exposedHeaders: ["authorization"],
     credentials: true,
